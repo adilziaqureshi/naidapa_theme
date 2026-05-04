@@ -11,35 +11,6 @@
     {% for include in include_css -%}
     {{ include_style(include) }}
     {%- endfor -%}
-
-    <style>
-        /* Essential structure for the custom layout since we removed it from normal CSS */
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        #naidapa-layout {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-            background-color: var(--bg-color, #f8fafc);
-        }
-
-        .main-section {
-            flex-grow: 1;
-            overflow-y: auto;
-            position: relative;
-            background: var(--bg-color, #f8fafc);
-        }
-
-        #body {
-            min-height: calc(100vh - 40px);
-        }
-    </style>
 </head>
 
 <body>

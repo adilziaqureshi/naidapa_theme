@@ -260,7 +260,9 @@ nav.vertical-sidebar {
 }
 
 .app-wrapper .app-content {
-    min-height: 100vh;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: 0px 0px 0px 286px;
     transition: var(--app-transition);
     width: 100%;
