@@ -29,13 +29,18 @@ app_include_css = [
     "/assets/naidapa_theme/vendor/simplebar/simplebar.css",
     "/assets/naidapa_theme/css/ki_style.css",
     "/assets/naidapa_theme/css/ki_responsive.css",
-    "/assets/naidapa_theme/css/naidapa_theme.css"
+    "/assets/naidapa_theme/css/naidapa_theme.css?v=hide-help-20260611"
 ]
 app_include_js = [
     "/assets/naidapa_theme/vendor/simplebar/simplebar.js",
     "/assets/naidapa_theme/vendor/animated_icon/iconify-icon.min.js",
-    "/assets/naidapa_theme/js/naidapa_theme.js"
+    "/assets/naidapa_theme/js/naidapa_theme.js?v=logo-svg-wordmark-20260609"
 ]
+
+website_context = {
+    "favicon": "/assets/naidapa_theme/images/NE.svg",
+    "splash_image": "/assets/naidapa_theme/images/NE.svg",
+}
 
 # include js, css files in header of web template (portal/customer pages)
 web_include_css = [

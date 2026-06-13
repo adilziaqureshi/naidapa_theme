@@ -111,6 +111,7 @@
     };
 
     naidapa_theme.run_patches = function () {
+        naidapa_theme.setup_nested_sidebar();
         naidapa_theme.highlight_active_route();
         naidapa_theme.mutate_workspace_container();
         naidapa_theme.mutate_custom_elements();
@@ -120,30 +121,29 @@
     };
 
     naidapa_theme.mutate_number_cards = function () {
-        $('.number-widget-box').each(function (index) {
-            $(this).attr('data-color-index', index % 4);
+        $(".number-widget-box").each(function (index) {
+            $(this).attr("data-color-index", index % 4);
         });
     };
 
     naidapa_theme.inject_navbar_toggle = function () {
-        if ($('.header-toggle').length === 0) {
-            const toggle_html = '<span class="header-toggle" style="margin-right: 15px; cursor: pointer; display: flex; align-items: center; font-size: 22px; color: var(--text-primary);"> <iconify-icon icon="line-md:menu-fold-left"></iconify-icon></span>';
-            $('.navbar-brand').before(toggle_html);
+        if ($(".header-toggle").length === 0) {
+            const toggle_html = `<span class="header-toggle" style="margin-right: 15px; cursor: pointer; display: flex; align-items: center; font-size: 22px; color: var(--text-primary);"> <iconify-icon icon="line-md:menu-fold-left"></iconify-icon></span>`;
+            $(".navbar-brand").before(toggle_html);
 
-            // Bind click event to toggle sidebar
-            $('.header-toggle').on('click', function () {
-                const $body = $('body');
-                const $icon = $(this).find('iconify-icon');
-                const $sidebar = $('.vertical-sidebar');
+            $(".header-toggle").on("click", function () {
+                const $body = $("body");
+                const $icon = $(this).find("iconify-icon");
+                const $sidebar = $(".vertical-sidebar");
 
-                if ($body.hasClass('sidebar-menu-opened')) {
-                    $body.removeClass('sidebar-menu-opened');
-                    $sidebar.removeClass('semi-nav');
-                    $icon.attr('icon', 'line-md:menu-fold-left');
+                if ($body.hasClass("sidebar-menu-opened")) {
+                    $body.removeClass("sidebar-menu-opened");
+                    $sidebar.removeClass("semi-nav");
+                    $icon.attr("icon", "line-md:menu-fold-left");
                 } else {
-                    $body.addClass('sidebar-menu-opened');
-                    $sidebar.addClass('semi-nav');
-                    $icon.attr('icon', 'line-md:menu-fold-right');
+                    $body.addClass("sidebar-menu-opened");
+                    $sidebar.addClass("semi-nav");
+                    $icon.attr("icon", "line-md:menu-fold-right");
                 }
             });
         }
@@ -151,7 +151,7 @@
 
     naidapa_theme.mutate_custom_elements = function () {
         const changes = [
-            { selector: '.old-style-class', add: 'new-style-class', remove: 'old-style-class' },
+            { selector: ".old-style-class", add: "new-style-class", remove: "old-style-class" },
         ];
 
         changes.forEach(item => {
@@ -161,19 +161,70 @@
         });
     };
 
+    naidapa_theme.setup_nested_sidebar = function () {
+        $(".main-nav").off("click.naidapa-submenu", ".sidebar-submenu-toggle");
+        $(".main-nav").on("click.naidapa-submenu", ".sidebar-submenu-toggle", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const $item = $(this).closest(".has-submenu");
+            const workspace = $item.find("> a.sidebar-parent-link").attr("href") || "";
+            const is_open = !$item.hasClass("submenu-open");
+
+            $item.toggleClass("submenu-open", is_open);
+            $(this).attr("aria-expanded", is_open ? "true" : "false");
+
+            if (workspace) {
+                sessionStorage.setItem(`naidapa-submenu:${workspace}`, is_open ? "open" : "closed");
+            }
+        });
+    };
+
     naidapa_theme.highlight_active_route = function () {
         const current_route = window.location.pathname;
-        $('.main-nav > li').removeClass('active');
+        $(".main-nav li").removeClass("active child-active submenu-open");
+        $(".main-nav .sidebar-submenu-toggle").attr("aria-expanded", "false");
 
-        // Exact matching
-        $(`.main-nav > li > a[href="${current_route}"]`).parent().addClass('active');
+        const set_parent_state = function ($parent, should_open) {
+            $parent.toggleClass("submenu-open", should_open);
+            $parent.find("> .sidebar-submenu-toggle").attr("aria-expanded", should_open ? "true" : "false");
+        };
 
-        // Fuzzy matching
+        const activate_link = function ($link) {
+            const $child_item = $link.closest(".sidebar-submenu li");
+            if ($child_item.length) {
+                $child_item.addClass("active");
+                const $parent = $link.closest(".has-submenu");
+                const parent_href = $parent.find("> a.sidebar-parent-link").attr("href") || "";
+                const saved_state = parent_href ? sessionStorage.getItem(`naidapa-submenu:${parent_href}`) : null;
+
+                $parent.addClass("active child-active");
+                set_parent_state($parent, saved_state !== "closed");
+            } else {
+                const $parent_item = $link.closest(".main-nav > li");
+                $parent_item.addClass("active");
+                const parent_href = $link.attr("href") || "";
+                const saved_state = parent_href ? sessionStorage.getItem(`naidapa-submenu:${parent_href}`) : null;
+                if ($parent_item.hasClass("has-submenu")) {
+                    set_parent_state($parent_item, saved_state === "open");
+                }
+            }
+        };
+
+        const exact_link = $(".main-nav a").filter(function () {
+            return $(this).attr("href") === current_route;
+        }).first();
+
+        if (exact_link.length) {
+            activate_link(exact_link);
+            return;
+        }
+
         if (current_route && current_route !== "/app") {
-            $('.main-nav > li > a').each(function () {
-                let href = $(this).attr('href');
-                if (href && current_route.startsWith(href) && href !== "/app") {
-                    $(this).parent().addClass('active');
+            $(".main-nav a").each(function () {
+                const href = $(this).attr("href");
+                if (href && href !== "/app" && current_route.startsWith(href)) {
+                    activate_link($(this));
                 }
             });
         }
@@ -198,7 +249,7 @@
     // Premium Gradient Line Chart Injector
     naidapa_theme.mutate_charts = function () {
         // Inject the SVG linear gradient globally if it doesn't exist to ensure correct namespace rendering
-        if ($('#naidapa-global-gradient').length === 0) {
+        if (!document.getElementById("naidapa-global-gradient")) {
             const svgHTML = `
                 <svg id="naidapa-global-gradient" width="0" height="0" style="position:absolute; width:0; height:0;">
                     <defs>

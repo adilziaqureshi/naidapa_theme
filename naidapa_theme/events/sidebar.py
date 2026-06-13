@@ -8,7 +8,15 @@ def get_desktop_pages():
     pages = pages_data.get("pages")
     
     hidden_workspaces = []
-    pages = [page for page in pages if page.get("title") not in hidden_workspaces]
+    hidden_workspace_names = set(
+        frappe.get_all("Workspace", filters={"is_hidden": 1}, pluck="name")
+    )
+    pages = [
+        page for page in pages
+        if page.get("title") not in hidden_workspaces
+        and page.get("name") not in hidden_workspace_names
+        and not page.get("is_hidden")
+    ]
     original_pages = pages
     
     # Filter for top-level pages

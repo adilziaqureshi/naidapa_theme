@@ -175,6 +175,50 @@ select.input-with-feedback {
     outline: none !important;
 }
 
+/* Keep the Desk command search aligned inside the navbar. */
+body.naidapa-theme-active .search-bar {
+    align-items: center !important;
+    display: flex !important;
+    height: 42px !important;
+    max-width: 376px !important;
+    position: relative !important;
+}
+
+body.naidapa-theme-active .search-bar .awesomplete {
+    display: block !important;
+    height: 42px !important;
+    width: 100% !important;
+}
+
+body.naidapa-theme-active .search-bar .awesomplete>input,
+body.naidapa-theme-active .search-bar #navbar-search {
+    border-radius: 6px !important;
+    height: 42px !important;
+    line-height: 20px !important;
+    min-height: 42px  !important;
+    padding: 7px 14px 7px 42px !important;
+}
+
+body.naidapa-theme-active .search-bar .search-icon {
+    align-items: center !important;
+    display: flex !important;
+    height: 36px !important;
+    justify-content: center !important;
+    left: 14px !important;
+    margin: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    top: 0 !important;
+    width: 16px !important;
+    z-index: 2 !important;
+}
+
+body.naidapa-theme-active .search-bar .search-icon svg {
+    display: block !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+
 /* Disabled / Read-Only Fields (KI-Admin Base Style) */
 .form-control:not([type="checkbox"]):not([type="radio"]):disabled,
 .form-control:not([type="checkbox"]):not([type="radio"])[readonly],
@@ -232,6 +276,12 @@ body.naidapa-theme-active .sticky-top .navbar {
 
 /* Hide Frappe's native application logo in the navbar */
 body.naidapa-theme-active .sticky-top .navbar-brand.navbar-home {
+    display: none !important;
+}
+
+/* Hide Frappe's native Help dropdown in the Desk navbar */
+.navbar .dropdown-help,
+.dropdown-help {
     display: none !important;
 }
 
@@ -1039,4 +1089,253 @@ span.sidebar-item-label {
 .page-head .btn {
     height: 32px !important;
     justify-content: center !important;
+}
+
+/* NE branding override */
+nav .app-logo {
+    align-items: flex-end;
+    justify-content: center;
+    overflow: hidden;
+    padding: 8px 18px 10px;
+}
+
+nav .app-logo .logo {
+    align-items: center;
+    background: transparent;
+    border-radius: 0;
+    display: flex !important;
+    gap: 8px;
+    height: 52px;
+    justify-content: flex-start;
+    padding: 0 !important;
+    text-decoration: none !important;
+    width: 100%;
+}
+
+nav .app-logo .logo img.ne-sidebar-logo {
+    display: block;
+    flex: 0 0 auto;
+    float: none !important;
+    height: 42px !important;
+    max-height: 42px !important;
+    object-fit: contain;
+    width: 46px !important;
+}
+
+nav .app-logo .logo .ne-sidebar-wordmark {
+    color: #008f79;
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Nested workspace sidebar */
+nav .app-nav .main-nav > li.has-submenu {
+    position: relative;
+}
+
+nav .app-nav .main-nav > li.has-submenu > a.sidebar-parent-link {
+    padding-right: 42px !important;
+}
+
+nav .app-nav .main-nav > li.has-submenu > .sidebar-submenu-toggle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: currentColor;
+    cursor: pointer;
+    display: flex;
+    height: 36px;
+    justify-content: center;
+    padding: 0;
+    position: absolute;
+    right: 10px;
+    top: 2px;
+    width: 28px;
+    z-index: 2;
+}
+
+nav .app-nav .main-nav > li.has-submenu > .sidebar-submenu-toggle iconify-icon {
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+nav .app-nav .main-nav > li.has-submenu.submenu-open > .sidebar-submenu-toggle iconify-icon {
+    transform: rotate(90deg);
+}
+
+nav .app-nav .sidebar-submenu {
+    display: none;
+    list-style: none;
+    margin: 0 0 6px 0;
+    padding: 0 0 0 18px;
+}
+
+nav .app-nav .main-nav > li.submenu-open > .sidebar-submenu {
+    display: block;
+}
+
+nav .app-nav .sidebar-submenu > li > a {
+    align-items: center;
+    border-radius: 5px;
+    color: var(--font-color);
+    display: flex !important;
+    font-size: 14px;
+    font-weight: 500;
+    gap: 8px;
+    margin: 2px 0 2px 12px;
+    padding: 8px 12px;
+    text-decoration: none;
+    transition: var(--app-transition);
+    white-space: nowrap;
+}
+
+nav .app-nav .sidebar-submenu > li > a:hover {
+    background-color: rgba(var(--primary), .08);
+    color: rgba(var(--primary), 1);
+}
+
+nav .app-nav .sidebar-submenu > li.active > a {
+    background-color: rgba(18, 113, 91, 0.12) !important;
+    color: #12715b !important;
+}
+
+nav .app-nav .main-nav > li.child-active > a.sidebar-parent-link {
+    background-color: #12715b !important;
+    color: #ffffff !important;
+}
+
+nav .app-nav .sidebar-submenu .sidebar-item-icon {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 18px;
+    justify-content: center;
+}
+
+/* Nested workspace sidebar final behavior */
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu {
+    position: relative !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > a.sidebar-parent-link {
+    align-items: center !important;
+    display: flex !important;
+    padding-right: 46px !important;
+    position: relative !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > a.sidebar-parent-link::after {
+    content: none !important;
+    display: none !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > button.sidebar-submenu-toggle {
+    -webkit-appearance: none !important;
+    align-items: center !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    cursor: pointer !important;
+    display: flex !important;
+    height: 34px !important;
+    justify-content: center !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+    outline: 0 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    right: 12px !important;
+    top: 3px !important;
+    width: 28px !important;
+    z-index: 5 !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > button.sidebar-submenu-toggle:hover {
+    background: rgba(var(--primary), .08) !important;
+    color: rgba(var(--primary), 1) !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > button.sidebar-submenu-toggle iconify-icon {
+    display: block !important;
+    font-size: 18px !important;
+    height: 18px !important;
+    transform: rotate(0deg) !important;
+    transition: transform 0.2s ease !important;
+    width: 18px !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu.submenu-open > button.sidebar-submenu-toggle iconify-icon {
+    transform: rotate(90deg) !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > ul.sidebar-submenu {
+    display: none !important;
+    list-style: none !important;
+    margin: 0 0 6px 0 !important;
+    padding: 0 0 0 22px !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu.submenu-open > ul.sidebar-submenu {
+    display: block !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > ul.sidebar-submenu > li {
+    padding: 0 !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > ul.sidebar-submenu > li > a {
+    align-items: center !important;
+    border-radius: 5px !important;
+    color: var(--font-color) !important;
+    display: flex !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    gap: 8px !important;
+    margin: 2px 0 2px 10px !important;
+    padding: 8px 12px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > ul.sidebar-submenu > li > a::after,
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > ul.sidebar-submenu > li > a::before {
+    content: none !important;
+    display: none !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu > ul.sidebar-submenu > li.active > a {
+    background: rgba(18, 113, 91, 0.12) !important;
+    color: #12715b !important;
+}
+
+nav.vertical-sidebar .app-nav ul.main-nav > li.has-submenu.child-active > a.sidebar-parent-link {
+    background: #12715b !important;
+    color: #ffffff !important;
+}
+
+
+
+/* Hide native ERPNext workspace sidebar and workspace page header */
+body.naidapa-theme-active .layout-side-section,
+body.naidapa-theme-active .sidebar-toggle-btn,
+body.naidapa-theme-active[data-route="Workspaces"] .page-head,
+body.naidapa-theme-active[data-route^="Workspaces/"] .page-head,
+body.naidapa-theme-active .page-head:has(.title-text[title="Workspace"]) {
+    display: none !important;
+}
+
+/* Keep Print Preview settings visible: Frappe puts print format, language, and letterhead controls here. */
+body.naidapa-theme-active .layout-side-section.print-preview-sidebar {
+    display: block !important;
+    flex: 0 0 260px !important;
+    max-width: 260px !important;
+    width: 260px !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }

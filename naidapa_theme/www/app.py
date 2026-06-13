@@ -57,6 +57,7 @@ def get_context(context):
             "app_name": (
                 frappe.get_website_settings("app_name") or frappe.get_system_settings("app_name") or "Frappe"
             ),
+            "favicon": frappe.get_website_settings("favicon") or "/assets/naidapa_theme/images/NE.svg",
             "pages": get_desktop_pages(),
         }
     )
